@@ -1,0 +1,28 @@
+{
+  "name": "my-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "types": "wrangler types worker/worker-configuration.d.ts",
+    "build": "npm run types && tsc && tsc -p worker && vite build",
+    "dev": "npm run build && wrangler dev",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:new": "wrangler d1 migrations create DB",
+    "check": "node platform/check/check.mjs"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.0",
+    "wrangler": "^4.149.0"
+  },
+  "dependencies": {
+    "jose": "^6.2.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

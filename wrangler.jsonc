@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // アプリ名。npm run setup -- <アプリ名> で書き換わる（英小文字・数字・ハイフン）
+  "name": "my-app",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  // 画面（静的ファイル）+ API。/api/* だけ API のコードで処理する
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  // データベースのつなぎ口（env.DB）。接続キーは存在しない。
+  // database_id は NCDC がアプリを用意したときに記入する（手元での開発には不要）
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-app",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // ファイル置き場（env.BUCKET）が必要な場合は NCDC に依頼する（docs/agent/request.md）。
+  // 用意されたら、NCDC が次の設定を有効にする:
+  // "r2_buckets": [{ "binding": "BUCKET", "bucket_name": "my-app-contents" }],
+  "vars": {
+    // 本人確認の設定。NCDC が環境に合わせて記入する（手元での開発には不要）
+    "TEAM_DOMAIN": "https://REPLACE_TEAM.cloudflareaccess.com",
+    "POLICY_AUD": "REPLACE_WITH_ACCESS_AUD"
+  },
+  "observability": { "enabled": true }
+}
